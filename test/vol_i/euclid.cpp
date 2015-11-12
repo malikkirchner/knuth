@@ -64,6 +64,9 @@ const unsigned primes [] = {
 BOOST_AUTO_TEST_CASE( test_euclid ) {
     using namespace knuth;
 
+    static_assert( euclid<unsigned>( 100,  45 ) == 5, "Check for constexpr-ness" );
+    static_assert( euclid<int     >( 100, -45 ) == 5, "Check for constexpr-ness" );
+
     BOOST_CHECK( euclid<int>(    0,    2 ) == 2 );
     BOOST_CHECK( euclid<int>(    2,    0 ) == 2 );
     BOOST_CHECK( euclid<int>(   10,    4 ) == 2 );
