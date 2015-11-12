@@ -61,6 +61,13 @@ BOOST_AUTO_TEST_CASE( node ) {
     BOOST_CHECK( euclid<int>(    5,    4 ) == 1 );
     BOOST_CHECK( euclid<int>( 1000, 3332 ) == 4 );
 
+    BOOST_CHECK( euclid<int>(    0,   -2 ) == 2 );
+    BOOST_CHECK( euclid<int>(    2,    0 ) == 2 );
+    BOOST_CHECK( euclid<int>(   10,   -4 ) == 2 );
+    BOOST_CHECK( euclid<int>(   -4,  -10 ) == 2 );
+    BOOST_CHECK( euclid<int>(    5,   -4 ) == 1 );
+    BOOST_CHECK( euclid<int>( 1000,-3332 ) == 4 );
+
     const size_t number_tries   = 1000;
 
     std::mt19937_64                         generator;

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <type_traits>
+#include <cmath>
 
 namespace knuth {
 
@@ -19,12 +21,26 @@ namespace knuth {
      */
     template<typename T>
     constexpr T euclid( const T& m, const T&n ) noexcept {
-        if ( (m == 0) || (n == 0) ) return m < n ? n : m;
+        static_assert( std::is_integral<T>::value, "Integer required." );
 
-        if ( m < n )
-            return detail::__euclid<T>( n, m );
-        else
-            return detail::__euclid<T>( m, n );
+        if ( std::is_unsigned<T>::value ) {
+            if ( (m == 0) || (n == 0) ) return m < n ? n : m;
+
+            if ( m < n )
+                return detail::__euclid<T>( n, m );
+            else
+                return detail::__euclid<T>( m, n );
+        } else {
+            const T a = std::abs(m);
+            const T b = std::abs(n);
+
+            if ( (a == 0) || (b == 0) ) return a < b ? b : a;
+
+            if ( a < b )
+                return detail::__euclid<T>( b, a );
+            else
+                return detail::__euclid<T>( a, b );
+        }
     }
 
 }
