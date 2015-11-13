@@ -31,107 +31,39 @@
 //**************************************************************************************//
 // clang-format enable
 
-#pragma once
+#include <iostream>
+#include <random>
 
-#include <cassert>
-#include <type_traits>
-#include <cmath>
-#include <tuple>
+#include <vol_i/euclid.hpp>
 
-namespace knuth {
+// Link to Boost
+#define BOOST_TEST_DYN_LINK
+#define BOOST_TEST_MAIN
+#define BOOST_TEST_MODULE "Extended Euclids Algorithm"
 
-namespace detail {
+// VERY IMPORTANT - include this last
+#include <boost/test/unit_test.hpp>
 
-    template < typename T > constexpr T __euclid( const T& m, const T& n ) noexcept {
-        const T r = m % n;
-        if ( r == 0 ) return n;
-        return __euclid< T >( n, r );
+
+BOOST_AUTO_TEST_CASE( test_extended_euclid ) {
+    using namespace knuth;
+
+    // static_assert( euclid< unsigned >( 100, 45 ) == 5, "Check for constexpr-ness" );
+    // static_assert( euclid< int >( 100, -45 ) == 5, "Check for constexpr-ness" );
+
+    const size_t number_tries = 1000;
+
+    std::mt19937_64 generator;
+    generator.seed( std::random_device{}() );
+    std::uniform_int_distribution< int > distribution( 0, 1e+6 );
+
+    int a, b, d, m, n;
+
+    for ( size_t k = 0; k < number_tries; ++k ) {
+        m = distribution( generator );
+        n = distribution( generator );
+        std::tie( a, b, d ) = extended_euclid< int >( m, n );
+        std::cout << "(" << a << ") * " << m << " + (" << b << ") * " << n << " = " << d << std::endl;
+        BOOST_CHECK( a * m + b * n == d );
     }
-
-    template < typename T > constexpr std::tuple< T, T, T > __extended_euclid( const T& m, const T& n ) noexcept {
-        // [initialize]
-        T a  = 0;
-        T b  = 1;
-        T aa = 1;
-        T bb = 0;
-        T c  = m;
-        T d  = n;
-
-        while ( true ) {
-            // [divide]
-            T q = c / d;
-            T r = c - q * d;
-
-            assert( a * m + b * n == d );
-            assert( aa * m + bb * n == c );
-            assert( ( 0 <= r ) && ( r < d ) );
-
-            // [remainder zero?]
-            if ( r == 0 ) break;
-
-            // [recycle]
-            c   = d;
-            d   = r;
-            T t = aa;
-            aa  = a;
-            a   = t - q * a;
-            t   = bb;
-            bb  = b;
-            b   = t - q * b;
-        }
-
-        assert( a*m + b*n == d);
-
-        return std::make_tuple< T, T, T >( std::move( a ), std::move( b ), std::move( d ) );
-    }
-}
-
-/*!
- * Euclids algorithm [(i)1.1:E]
- *
- * @param m integer
- * @param n integer
- *
- * @return greatest common divisor gcd(m,n)
- */
-template < typename T > constexpr T euclid( const T& m, const T& n ) noexcept {
-    static_assert( std::is_integral< T >::value, "Integer required." );
-
-    if ( std::is_unsigned< T >::value ) {
-        if ( ( m == 0 ) || ( n == 0 ) ) return m < n ? n : m;
-
-        if ( m < n )
-            return detail::__euclid< T >( n, m );
-        else
-            return detail::__euclid< T >( m, n );
-    } else {
-        const T a = std::abs( m );
-        const T b = std::abs( n );
-
-        if ( ( a == 0 ) || ( b == 0 ) ) return a < b ? b : a;
-
-        if ( a < b )
-            return detail::__euclid< T >( b, a );
-        else
-            return detail::__euclid< T >( a, b );
-    }
-}
-
-/*!
- * Extended Euclids algorithm [(i)1.2.1:E]
- *
- * @param m integer m > 0
- * @param n integer n > 0
- *
- * @return (a,b,d) that a*m + b*n = d
- */
-template < typename T > constexpr std::tuple< T, T, T > extended_euclid( const T& m, const T& n ) noexcept {
-    static_assert( std::is_integral< T >::value, "Integer required." );
-    static_assert( std::is_signed< T >::value, "Signed value required." );
-
-    assert( m > 0 );
-    assert( n > 0 );
-
-    return detail::__extended_euclid< T >( m, n );
-}
 }
