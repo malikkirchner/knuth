@@ -44,3 +44,4 @@ set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-g2 -O2")
 
 add_subdirectory(src)
 add_subdirectory(test)
+add_subdirectory(doxy)

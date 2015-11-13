@@ -31,6 +31,15 @@
 //**************************************************************************************//
 // clang-format enable
 
+
+/*!
+ * @file  euclid.hpp
+ * @brief Contains implementations of Euclids algorithm.
+ *
+ * @author Malik Kirchner <malik.kirchner@gmx.net>
+ */
+
+
 #pragma once
 
 #include <cassert>
@@ -87,7 +96,7 @@ namespace detail {
 }
 
 /*!
- * Euclids algorithm [(i)1.1:E]
+ * @brief Euclids algorithm [(i)1.1:E]
  *
  * @param m integer
  * @param n integer
@@ -118,7 +127,7 @@ template < typename T > constexpr T euclid( const T& m, const T& n ) noexcept {
 }
 
 /*!
- * Extended Euclids algorithm [(i)1.2.1:E]
+ * @brief Extended Euclids algorithm [(i)1.2.1:E]
  *
  * @param m integer m > 0
  * @param n integer n > 0

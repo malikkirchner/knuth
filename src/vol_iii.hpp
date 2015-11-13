@@ -31,4 +31,11 @@
 //**************************************************************************************//
 // clang-format enable
 
+/*!
+ * @file  vol_iii.hpp
+ * @brief Includes all implementations of algorithms from volume III.
+ *
+ * @author Malik Kirchner <malik.kirchner@gmx.net>
+ */
+
 #pragma once

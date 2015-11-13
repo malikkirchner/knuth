@@ -31,6 +31,13 @@
 //**************************************************************************************//
 // clang-format enable
 
-#pragma once#pragma once
+/*!
+ * @file  vol_i.hpp
+ * @brief Includes all implementations of algorithms from volume I.
+ *
+ * @author Malik Kirchner <malik.kirchner@gmx.net>
+ */
+
+#pragma once
 
 #include <vol_i/euclid.hpp>
