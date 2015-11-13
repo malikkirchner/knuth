@@ -4,6 +4,7 @@ Language:        Cpp
 AccessModifierOffset: -4
 AlignAfterOpenBracket: true
 AlignConsecutiveAssignments: true
+AlignConsecutiveDeclarations: true
 AlignEscapedNewlinesLeft: false
 AlignOperands:   true
 AlignTrailingComments: true
@@ -11,8 +12,8 @@ AllowAllParametersOfDeclarationOnNextLine: true
 AllowShortBlocksOnASingleLine: false
 AllowShortCaseLabelsOnASingleLine: false
 AllowShortFunctionsOnASingleLine: All
-AllowShortIfStatementsOnASingleLine: false
-AllowShortLoopsOnASingleLine: false
+AllowShortIfStatementsOnASingleLine: true
+AllowShortLoopsOnASingleLine: true
 AlwaysBreakAfterDefinitionReturnType: None
 AlwaysBreakBeforeMultilineStrings: false
 AlwaysBreakTemplateDeclarations: false

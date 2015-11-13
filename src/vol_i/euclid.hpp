@@ -44,15 +44,13 @@ namespace detail {
 
     template < typename T > constexpr T __euclid( const T& m, const T& n ) noexcept {
         const T r = m % n;
-        if ( r == 0 )
-            return n;
+        if ( r == 0 ) return n;
         return __euclid< T >( n, r );
     }
 
     template < typename T > constexpr std::tuple< T, T, T > __extended_euclid( const T& m, const T& n ) noexcept {
         const T r = m % n;
-        if ( r == 0 )
-            return n;
+        if ( r == 0 ) return n;
         return __extended_euclid< T >( n, r );
     }
 }
@@ -64,8 +62,7 @@ template < typename T > constexpr T euclid( const T& m, const T& n ) noexcept {
     static_assert( std::is_integral< T >::value, "Integer required." );
 
     if ( std::is_unsigned< T >::value ) {
-        if ( ( m == 0 ) || ( n == 0 ) )
-            return m < n ? n : m;
+        if ( ( m == 0 ) || ( n == 0 ) ) return m < n ? n : m;
 
         if ( m < n )
             return detail::__euclid< T >( n, m );
@@ -75,8 +72,7 @@ template < typename T > constexpr T euclid( const T& m, const T& n ) noexcept {
         const T a = std::abs( m );
         const T b = std::abs( n );
 
-        if ( ( a == 0 ) || ( b == 0 ) )
-            return a < b ? b : a;
+        if ( ( a == 0 ) || ( b == 0 ) ) return a < b ? b : a;
 
         if ( a < b )
             return detail::__euclid< T >( b, a );
@@ -92,8 +88,7 @@ template < typename T > constexpr std::tuple< T, T, T > extended_euclid( const T
     static_assert( std::is_integral< T >::value, "Integer required." );
     static_assert( std::is_unsigned< T >::value, "Unsigned value required." );
 
-    if ( ( m == 0 ) || ( n == 0 ) )
-        return m < n ? n : m;
+    if ( ( m == 0 ) || ( n == 0 ) ) return m < n ? n : m;
 
     if ( m < n )
         return detail::__extended_euclid< T >( n, m );
