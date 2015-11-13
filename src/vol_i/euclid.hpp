@@ -80,7 +80,7 @@ namespace detail {
             b   = t - q * b;
         }
 
-        assert( a*m + b*n == d);
+        assert( a * m + b * n == d );
 
         return std::make_tuple< T, T, T >( std::move( a ), std::move( b ), std::move( d ) );
     }
