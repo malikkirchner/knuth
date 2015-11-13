@@ -48,7 +48,7 @@ namespace detail {
         return __euclid< T >( n, r );
     }
 
-    template < typename T > constexpr std::tuple< T, T, T > __extended_euclid( const T& m, const T& n ) noexcept {
+    template < typename T > std::tuple< T, T, T > __extended_euclid( const T& m, const T& n ) noexcept {
         // [initialize]
         T a  = 0;
         T b  = 1;
@@ -125,9 +125,9 @@ template < typename T > constexpr T euclid( const T& m, const T& n ) noexcept {
  *
  * @return (a,b,d) that a*m + b*n = d
  */
-template < typename T > constexpr std::tuple< T, T, T > extended_euclid( const T& m, const T& n ) noexcept {
+template < typename T > std::tuple< T, T, T > extended_euclid( const T& m, const T& n ) noexcept {
     static_assert( std::is_integral< T >::value, "Integer required." );
-    static_assert( std::is_signed< T >::value, "Signed value required." );
+    static_assert( std::is_signed< T >::value, "Signed type required." );
 
     assert( m > 0 );
     assert( n > 0 );

@@ -48,9 +48,6 @@
 BOOST_AUTO_TEST_CASE( test_extended_euclid ) {
     using namespace knuth;
 
-    // static_assert( euclid< unsigned >( 100, 45 ) == 5, "Check for constexpr-ness" );
-    // static_assert( euclid< int >( 100, -45 ) == 5, "Check for constexpr-ness" );
-
     const size_t number_tries = 1000;
 
     std::mt19937_64 generator;
