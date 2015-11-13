@@ -34,6 +34,7 @@
 
 #include <type_traits>
 #include <cmath>
+#include <tuple>
 
 namespace knuth {
 
@@ -45,6 +46,14 @@ namespace knuth {
             if ( r == 0 ) return n;
             return __euclid<T>( n, r );
         }
+
+        template<typename T>
+        constexpr std::tuple<T,T,T> __extended_euclid( const T& m, const T&n ) noexcept {
+            const T r = m % n;
+            if ( r == 0 ) return n;
+            return __extended_euclid<T>( n, r );
+        }
+
 
     }
 
@@ -75,4 +84,19 @@ namespace knuth {
         }
     }
 
+    /*!
+     * Extended Euclids algorithm [(i)1.2.1:E]
+     */
+    template<typename T>
+    constexpr std::tuple<T,T,T> extended_euclid( const T& m, const T&n ) noexcept {
+        static_assert( std::is_integral<T>::value, "Integer required." );
+        static_assert( std::is_unsigned<T>::value, "Unsigned value required." );
+
+        if ( (m == 0) || (n == 0) ) return m < n ? n : m;
+
+        if ( m < n )
+            return detail::__extended_euclid<T>( n, m );
+        else
+            return detail::__extended_euclid<T>( m, n );
+    }
 }
