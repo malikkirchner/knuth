@@ -1,3 +1,4 @@
+// clang-format disable
 //**************************************************************************************//
 //     Copyright (C) 2014 Malik Kirchner "malik.kirchner@gmx.net"                       //
 //                                                                                      //
@@ -28,6 +29,7 @@
 //     Programm erhalten haben. Wenn nicht, siehe <http://www.gnu.org/licenses/>.       //
 //                                                                                      //
 //**************************************************************************************//
+// clang-format enable
 
 #pragma once#pragma once
 
