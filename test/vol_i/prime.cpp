@@ -54,13 +54,35 @@ const unsigned primes[] = {
         751, 757, 761, 769, 773, 787, 797, 809, 811, 821, 823, 827, 829, 839, 853, 857, 859, 863, 877, 881, 883, 887};
 
 
-BOOST_AUTO_TEST_CASE( test_euclid ) {
-    const size_t N = sizeof(primes)/sizeof(decltype(primes[0]));
-    auto result = knuth::primes<unsigned, N>();
-
+template<typename T, size_t N>
+void print( std::array< T, N > result ) {
     for ( size_t k = 0; k < N; ++k ) {
         std::cout << result[k] << ((k + 1)% 10 == 0 ? "\n" : "\t");
         BOOST_CHECK( result[k] == primes[k] );
     }
     std::cout << std::endl;
+}
+
+BOOST_AUTO_TEST_CASE( test_euclid1 ) {
+    const size_t N = 1;
+    auto result = knuth::primes<unsigned, N>();
+    print( result );
+}
+
+BOOST_AUTO_TEST_CASE( test_euclid2 ) {
+    const size_t N = 2;
+    auto result = knuth::primes<unsigned, N>();
+    print( result );
+}
+
+BOOST_AUTO_TEST_CASE( test_euclid3 ) {
+    const size_t N = 3;
+    auto result = knuth::primes<unsigned, N>();
+    print( result );
+}
+
+BOOST_AUTO_TEST_CASE( test_euclidN ) {
+    const size_t N = sizeof(primes)/sizeof(decltype(primes[0]));
+    auto result = knuth::primes<unsigned, N>();
+    print( result );
 }

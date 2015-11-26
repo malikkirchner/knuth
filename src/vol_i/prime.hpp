@@ -59,7 +59,8 @@ namespace detail {
  * @return first N prime numbers
  */
 template < typename T, size_t N > std::array<T, N> primes() noexcept {
-    static_assert( std::is_integral<T>::value, "" );
+    static_assert( std::is_integral<T>::value, "There are only integral prime numbers." );
+    static_assert( N > 0, "Let me calculate at least one prime number, please!" );
 
     std::array<T, N> result;
     result[0]     = 2;
