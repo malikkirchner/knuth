@@ -32,35 +32,35 @@
 // clang-format enable
 
 #include <iostream>
-#include <random>
 
-#include <vol_i/euclid.hpp>
+#include <vol_i/prime.hpp>
 
 // Link to Boost
 #define BOOST_TEST_DYN_LINK
 #define BOOST_TEST_MAIN
-#define BOOST_TEST_MODULE "Extended Euclids algorithm"
+#define BOOST_TEST_MODULE "Prime number algorithm"
 
 // VERY IMPORTANT - include this last
 #include <boost/test/unit_test.hpp>
 
 
-BOOST_AUTO_TEST_CASE( test_extended_euclid ) {
-    using namespace knuth;
+const unsigned primes[] = {
+        2,   3,   5,   7,   11,  13,  17,  19,  23,  29,  31,  37,  41,  43,  47,  53,  59,  61,  67,  71,  73,  79,
+        83,  89,  97,  101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193,
+        197, 199, 211, 223, 227, 229, 233, 239, 241, 251, 257, 263, 269, 271, 277, 281, 283, 293, 307, 311, 313, 317,
+        331, 337, 347, 349, 353, 359, 367, 373, 379, 383, 389, 397, 401, 409, 419, 421, 431, 433, 439, 443, 449, 457,
+        461, 463, 467, 479, 487, 491, 499, 503, 509, 521, 523, 541, 547, 557, 563, 569, 571, 577, 587, 593, 599, 601,
+        607, 613, 617, 619, 631, 641, 643, 647, 653, 659, 661, 673, 677, 683, 691, 701, 709, 719, 727, 733, 739, 743,
+        751, 757, 761, 769, 773, 787, 797, 809, 811, 821, 823, 827, 829, 839, 853, 857, 859, 863, 877, 881, 883, 887};
 
-    const size_t number_tries = 1000;
 
-    std::mt19937_64 generator;
-    generator.seed( std::random_device{}() );
-    std::uniform_int_distribution< int > distribution( 0, 1e+6 );
+BOOST_AUTO_TEST_CASE( test_euclid ) {
+    const size_t N = sizeof(primes)/sizeof(decltype(primes[0]));
+    auto result = knuth::primes<unsigned, N>();
 
-    int a, b, d, m, n;
-
-    for ( size_t k = 0; k < number_tries; ++k ) {
-        m = distribution( generator );
-        n = distribution( generator );
-        std::tie( a, b, d ) = extended_euclid< int >( m, n );
-        std::cout << "(" << a << ") * " << m << " + (" << b << ") * " << n << " = " << d << std::endl;
-        BOOST_CHECK( a * m + b * n == d );
+    for ( size_t k = 0; k < N; ++k ) {
+        std::cout << result[k] << ((k + 1)% 10 == 0 ? "\n" : "\t");
+        BOOST_CHECK( result[k] == primes[k] );
     }
+    std::cout << std::endl;
 }

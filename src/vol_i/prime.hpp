@@ -31,36 +31,59 @@
 //**************************************************************************************//
 // clang-format enable
 
-#include <iostream>
-#include <random>
 
-#include <vol_i/euclid.hpp>
-
-// Link to Boost
-#define BOOST_TEST_DYN_LINK
-#define BOOST_TEST_MAIN
-#define BOOST_TEST_MODULE "Extended Euclids algorithm"
-
-// VERY IMPORTANT - include this last
-#include <boost/test/unit_test.hpp>
+/*!
+ * @file  prime.hpp
+ * @brief Contains implementations of prime number algorithms.
+ *
+ * @author Malik Kirchner <malik.kirchner@gmx.net>
+ */
 
 
-BOOST_AUTO_TEST_CASE( test_extended_euclid ) {
-    using namespace knuth;
+#pragma once
 
-    const size_t number_tries = 1000;
+#include <cassert>
+#include <type_traits>
+#include <array>
 
-    std::mt19937_64 generator;
-    generator.seed( std::random_device{}() );
-    std::uniform_int_distribution< int > distribution( 0, 1e+6 );
+namespace knuth {
 
-    int a, b, d, m, n;
+namespace detail {
 
-    for ( size_t k = 0; k < number_tries; ++k ) {
-        m = distribution( generator );
-        n = distribution( generator );
-        std::tie( a, b, d ) = extended_euclid< int >( m, n );
-        std::cout << "(" << a << ") * " << m << " + (" << b << ") * " << n << " = " << d << std::endl;
-        BOOST_CHECK( a * m + b * n == d );
+
+}
+
+/*!
+ * @brief Finds the first N prime numbers [(i)1.3.2:P]
+ *
+ * @return first N prime numbers
+ */
+template < typename T, size_t N > std::array<T, N> primes() noexcept {
+    static_assert( std::is_integral<T>::value, "" );
+
+    std::array<T, N> result;
+    result[0]     = 2;
+    result[1]     = 3;
+
+    T       next  = 3;
+    size_t  j     = 1;
+
+    while ( j < N ) {
+        next += 2;
+        for ( size_t k = 1; k <= j; ++k ) {
+            const T q = next / result[k];
+            const T r = next - q * result[k];
+            if ( r == 0 ) { break; }
+            if ( q <= result[k] ) {
+                ++j;
+                result[j] = next;
+                break;
+            }
+        }
     }
+
+    return result;
+}
+
+
 }

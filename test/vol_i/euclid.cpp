@@ -39,7 +39,7 @@
 // Link to Boost
 #define BOOST_TEST_DYN_LINK
 #define BOOST_TEST_MAIN
-#define BOOST_TEST_MODULE "Euclids Algorithm"
+#define BOOST_TEST_MODULE "Euclids algorithm"
 
 // VERY IMPORTANT - include this last
 #include <boost/test/unit_test.hpp>
